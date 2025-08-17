@@ -1,30 +1,25 @@
 # Gitコマンド・チートシート（日本語）
 
-このリポジトリは、日常の開発で役立つ **Git の実践的チートシート** を提供します。  
-旧コマンドから新コマンドへの置き換え、チームでの運用上の注意点も含みます。
-
-> デフォルトブランチ名は *main* 前提です（職場ルールに従って *master* などへ読み替えてください）。
-
----
-
 ## 目次
-- [初期セットアップ & リモート](#初期セットアップ--リモート)
-- [最初のPush（追跡設定）](#最初のpush追跡設定)
-- [変更の確認](#変更の確認)
-- [ステージングと取り消し（新/旧）](#ステージングと取り消し新旧)
-- [ファイルの追加・削除](#ファイルの追加削除)
-- [コミット](#コミット)
-- [取得・同期（fetch / pull）](#取得同期fetch--pull)
-- [ブランチ操作](#ブランチ操作)
-- [マージとリベース](#マージとリベース)
-- [コミット履歴の整理（インタラクティブrebase）](#コミット履歴の整理インタラクティブrebase)
-- [タグ](#タグ)
-- [スタッシュ（作業の一時避難）](#スタッシュ作業の一時避難)
-- [よく使うログの書式](#よく使うログの書式)
-- [便利エイリアス例](#便利エイリアス例)
-- [新旧コマンド 対応表](#新旧コマンド-対応表)
-- [注意点](#注意点)
-- [ライセンス](#ライセンス)
+
+- [Gitコマンド・チートシート（日本語）](#gitコマンドチートシート日本語)
+  - [目次](#目次)
+  - [初期セットアップ \& リモート](#初期セットアップ--リモート)
+  - [最初のPush（追跡設定）](#最初のpush追跡設定)
+  - [変更の確認](#変更の確認)
+  - [ステージングと取り消し（新/旧）](#ステージングと取り消し新旧)
+  - [ファイルの追加・削除](#ファイルの追加削除)
+  - [コミット](#コミット)
+  - [取得・同期（fetch / pull）](#取得同期fetch--pull)
+  - [ブランチ操作](#ブランチ操作)
+  - [マージとリベース](#マージとリベース)
+  - [コミット履歴の整理（インタラクティブrebase）](#コミット履歴の整理インタラクティブrebase)
+  - [タグ](#タグ)
+  - [スタッシュ（作業の一時避難）](#スタッシュ作業の一時避難)
+  - [よく使うログの書式](#よく使うログの書式)
+  - [便利エイリアス例](#便利エイリアス例)
+  - [新旧コマンド 対応表](#新旧コマンド-対応表)
+  - [注意点](#注意点)
 
 ---
 
@@ -36,6 +31,7 @@ git remote -v                 # 登録リモート確認
 git remote rename <old> <new> # リモート名の変更
 git remote show origin        # 追跡ブランチ等の詳細
 ```
+
 - リモートは複数登録可（例：`origin` と `upstream`）。
 
 ---
@@ -67,12 +63,14 @@ git log --oneline --decorate --graph --all  # 流れを可視化
 
 ## ステージングと取り消し（新/旧）
 
-**ワークツリーの変更取り消し**  
-- 旧: `git checkout -- <path>` / `git checkout -- .`  
+**ワークツリーの変更取り消し**
+
+- 旧: `git checkout -- <path>` / `git checkout -- .`
 - 新(推奨): `git restore <path>` / `git restore .`
 
-**ステージの変更取り消し**  
-- 旧: `git reset HEAD <path>`  
+**ステージの変更取り消し**
+
+- 旧: `git reset HEAD <path>`
 - 新(推奨): `git restore --staged <path>` / `git restore --staged .`
 
 ---
@@ -112,7 +110,8 @@ git pull --rebase             # 明示的にrebase
 git config --global pull.rebase true
 git config branch.main.rebase true
 ```
-> `git pull origin master` のように「名前直指定pull」は混乱の元。  
+
+> `git pull origin master` のように「名前直指定pull」は混乱の元。
 > 原則：**上流設定して `git pull`** か **`fetch` の後に `merge/rebase`**。
 
 ---
@@ -140,8 +139,9 @@ git branch -D <name>          # 強制削除
 git push -u origin <name>     # 初回は -u で追跡設定
 ```
 
-**用語**  
-- `HEAD` … 今見ているコミット（通常は現在ブランチ先頭）  
+**用語**
+
+- `HEAD` … 今見ているコミット（通常は現在ブランチ先頭）
 - ブランチ名は**最新コミットへのポインタ**
 
 ---
@@ -155,8 +155,9 @@ git merge origin/main         # 追跡ブランチを取り込む
 git rebase <upstream>         # カレントのコミットを付け替え
 git pull --rebase             # 取得と同時に付け替え
 ```
-- **公開（push）前のローカル整理**は rebase 推奨。  
-- **共有済み履歴への rebase は原則NG**。  
+
+- **公開（push）前のローカル整理**は rebase 推奨。
+- **共有済み履歴への rebase は原則NG**。
 - コンフリクトはマージでもリベースでも発生し得る。
 
 ---
@@ -228,29 +229,22 @@ git config --global alias.lg "log --oneline --decorate --graph --all"
 
 ## 新旧コマンド 対応表
 
-| 目的 | 旧 | 新（推奨） |
-|---|---|---|
-| ブランチ作成+切替 | `git checkout -b <br>` | `git switch -c <br>` |
-| ブランチ切替 | `git checkout <br>` | `git switch <br>` |
-| ワークツリー変更取消 | `git checkout -- <path>` / `.` | `git restore <path>` / `.` |
-| ステージ取消 | `git reset HEAD <path>` | `git restore --staged <path>` |
-| 初回push+追跡 | `git push -u origin master` | `git push -u origin main` |
-| pull時rebase | `git pull --rebase` | `git config pull.rebase true`（既定化） |
+| 目的                 | 旧                                 | 新（推奨）                                |
+| -------------------- | ---------------------------------- | ----------------------------------------- |
+| ブランチ作成+切替    | `git checkout -b <br>`           | `git switch -c <br>`                    |
+| ブランチ切替         | `git checkout <br>`              | `git switch <br>`                       |
+| ワークツリー変更取消 | `git checkout -- <path>` / `.` | `git restore <path>` / `.`            |
+| ステージ取消         | `git reset HEAD <path>`          | `git restore --staged <path>`           |
+| 初回push+追跡        | `git push -u origin master`      | `git push -u origin main`               |
+| pull時rebase         | `git pull --rebase`              | `git config pull.rebase true`（既定化） |
 
 ---
 
 ## 注意点
 
-- `git log -p index.html` は `git log -p -- index.html` として `--` を挟む（曖昧さ回避）。  
-- 共有済みコミットへの `--amend` / `rebase -i` は原則禁止。必要ならチーム合意の上で。  
-- 新規作成で main を既定にしたい場合：  
+- `git log -p index.html` は `git log -p -- index.html` として `--` を挟む（曖昧さ回避）。
+- 共有済みコミットへの `--amend` / `rebase -i` は原則禁止。必要ならチーム合意の上で。
+- 新規作成で main を既定にしたい場合：
   ```bash
   git config --global init.defaultBranch main
   ```
-
----
-
-## ライセンス
-
-- © あなた（または所属組織）。  
-- 本チートシートは **CC BY 4.0** で提供します（出典表示で再利用可）。詳しくは [LICENSE](LICENSE) を参照してください。
