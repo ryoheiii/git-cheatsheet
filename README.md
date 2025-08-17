@@ -63,12 +63,12 @@ git log --oneline --decorate --graph --all  # 流れを可視化
 
 ## ステージングと取り消し（新/旧）
 
-**ワークツリーの変更取り消し**
+### ワークツリーの変更取り消し
 
 - 旧: `git checkout -- <path>` / `git checkout -- .`
 - 新(推奨): `git restore <path>` / `git restore .`
 
-**ステージの変更取り消し**
+### ステージの変更取り消し
 
 - 旧: `git reset HEAD <path>`
 - 新(推奨): `git restore --staged <path>` / `git restore --staged .`
@@ -139,7 +139,7 @@ git branch -D <name>          # 強制削除
 git push -u origin <name>     # 初回は -u で追跡設定
 ```
 
-**用語**
+### 用語
 
 - `HEAD` … 今見ているコミット（通常は現在ブランチ先頭）
 - ブランチ名は**最新コミットへのポインタ**
