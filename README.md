@@ -245,6 +245,8 @@ git config --global alias.lg "log --oneline --decorate --graph --all"
 - `git log -p index.html` は `git log -p -- index.html` として `--` を挟む（曖昧さ回避）。
 - 共有済みコミットへの `--amend` / `rebase -i` は原則禁止。必要ならチーム合意の上で。
 - 新規作成で main を既定にしたい場合：
+
   ```bash
   git config --global init.defaultBranch main
   ```
+
