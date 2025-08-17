@@ -1,8 +1,8 @@
-# Gitコマンド・チートシート（日本語）
+# Gitコマンド・チートシート
 
 ## 目次
 
-- [Gitコマンド・チートシート（日本語）](#gitコマンドチートシート日本語)
+- [Gitコマンド・チートシート](#gitコマンドチートシート)
   - [目次](#目次)
   - [初期セットアップ \& リモート](#初期セットアップ--リモート)
   - [最初のPush（追跡設定）](#最初のpush追跡設定)
@@ -249,4 +249,3 @@ git config --global alias.lg "log --oneline --decorate --graph --all"
   ```bash
   git config --global init.defaultBranch main
   ```
-
